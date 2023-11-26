@@ -32,10 +32,12 @@ export class App extends Component {
   }
 
   // Sprawdź, czy stan contacts został zmieniony w porównaniu do poprzedniego stanu
-  componentDidUpdate(prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      const jsonContacts = JSON.stringify(this.state.contacts);
-      localStorage.setItem('contacts', jsonContacts);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.someProp !== this.props.someProp) {
+      if (prevState.contacts !== this.state.contacts) {
+        const jsonContacts = JSON.stringify(this.state.contacts);
+        localStorage.setItem('contacts', jsonContacts);
+      }
     }
   }
 
