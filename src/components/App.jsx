@@ -17,6 +17,28 @@ export class App extends Component {
     number: '',
   };
 
+  // Metoda cyklu życiowego: Wczytaj kontakty z localStorage po zamontowaniu komponentu
+  componentDidMount() {
+    try {
+      const storedContacts = localStorage.getItem('contacts');
+      const contacts = JSON.parse(storedContacts);
+
+      if (contacts) {
+        this.setState({ contacts });
+      }
+    } catch (error) {
+      console.error('Error loading contacts from localStorage:', error);
+    }
+  }
+
+  // Sprawdź, czy stan contacts został zmieniony w porównaniu do poprzedniego stanu
+  componentDidUpdate(prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      const jsonContacts = JSON.stringify(this.state.contacts);
+      localStorage.setItem('contacts', jsonContacts);
+    }
+  }
+
   addContact = (name, number) => {
     const contact = {
       id: nanoid(),
